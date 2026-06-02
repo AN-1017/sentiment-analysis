@@ -70,18 +70,46 @@ All original input columns plus the following graph output columns:
 - Predicted vs. true sentiment distributions
 - LLM self-review stats: agreement rate and iteration count distribution
 
-## Requirements
+## Installation
 
-```
-pandas
-python-dotenv
-langchain-openai
-langgraph
-pydantic
-scikit-learn
+**1. Clone the repository**
+
+```bash
+git clone https://github.com/adity-narvekar/sentiment-analysis.git
+cd sentiment-analysis
 ```
 
-An `OPENAI_API_KEY` must be available in the environment or supplied via `--env-file`.
+**2. Create and activate a virtual environment (recommended)**
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate      # macOS / Linux
+.venv\Scripts\activate         # Windows
+```
+
+**3. Install dependencies**
+
+```bash
+pip install -r requirements.txt
+```
+
+**4. Set up your OpenAI API key**
+
+Either export it as an environment variable:
+
+```bash
+export OPENAI_API_KEY=sk-...
+```
+
+Or place it in a `.env` file and pass it via `--env-file`:
+
+```
+OPENAI_API_KEY=sk-...
+```
+
+```bash
+python sentiment_analysis.py data.csv --env-file .env
+```
 
 ## Dataset
 
