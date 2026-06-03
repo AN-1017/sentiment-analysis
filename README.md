@@ -16,24 +16,50 @@ START → answer_node → review_node ─── agree or limit reached ──→
                           └── disagrees, count < 3 ──→ answer_node
 ```
 
+## Scripts
+
+| Script | Description |
+|:---|:---|
+| `sentiment_analysis.py` | Original sequential version — processes one review at a time |
+| `sentiment_analysis_async.py` | Async concurrent version — processes N reviews in parallel (recommended for large datasets) |
+
+For large datasets (1,000+ reviews), use the async version — it is ~15–20x faster than the sequential version.
+
 ## Usage
+
+### Sequential (original)
 
 ```bash
 python sentiment_analysis.py <csv_path> [--env-file <path>]
 ```
 
+### Async concurrent (recommended)
+
+```bash
+python sentiment_analysis_async.py <csv_path> [--env-file <path>] [--concurrency <n>]
+```
+
 **Arguments:**
 
-| Argument | Description |
-|:---|:---|
-| `csv_path` | Path to the input CSV file |
-| `--env-file` | Path to a `.env` file containing API keys (default: auto-discover from current directory) |
+| Argument | Description | Default |
+|:---|:---|:---|
+| `csv_path` | Path to the input CSV file | — |
+| `--env-file` | Path to a `.env` file containing API keys | auto-discover |
+| `--concurrency` | Number of reviews to process in parallel (async only) | `20` |
 
 **Example:**
 
 ```bash
-python sentiment_analysis.py "Womens Clothing E-Commerce Reviews.csv" --env-file /path/to/.env
+python sentiment_analysis_async.py "Womens Clothing E-Commerce Reviews.csv" --env-file .env --concurrency 20
 ```
+
+### Running in the background (large datasets)
+
+```bash
+nohup python3 -u sentiment_analysis_async.py data.csv --env-file .env > run_log.txt 2>&1 &
+```
+
+The `-u` flag disables Python's output buffering so progress is written to the log immediately.
 
 ## Input format
 

@@ -186,9 +186,9 @@ def _build_metrics_md(df: pd.DataFrame, csv_path: str) -> str:
 
 def run(csv_path: str, env_file: Optional[str] = None) -> pd.DataFrame:
     if env_file:
-        load_dotenv(env_file)
+        load_dotenv(env_file, override=True)
     else:
-        load_dotenv()
+        load_dotenv(override=True)
 
     df = pd.read_csv(csv_path)
 
@@ -196,12 +196,33 @@ def run(csv_path: str, env_file: Optional[str] = None) -> pd.DataFrame:
     if missing:
         raise ValueError(f"Input CSV is missing required columns: {missing}")
 
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0, max_tokens=1024)
     graph = _build_graph(llm)
 
     print(f"Processing {len(df)} reviews...")
     inputs = [{"review_text": str(text)} for text in df["Review_text"]]
-    results = graph.batch(inputs)
+
+    results = []
+    errors = 0
+    for i, inp in enumerate(inputs):
+        try:
+            result = graph.invoke(inp)
+            results.append(result)
+        except Exception as e:
+            print(f"  [row {i}] ERROR: {type(e).__name__}: {str(e)[:120]} — skipping")
+            results.append({
+                "review_text": inp["review_text"],
+                "sentiment": "error",
+                "reasoning": str(e)[:200],
+                "agreement": False,
+                "review_reasoning": "",
+                "review_count": 0,
+            })
+            errors += 1
+        if (i + 1) % 500 == 0:
+            print(f"  {i + 1}/{len(inputs)} processed ({errors} errors so far)...")
+
+    print(f"Done. {len(results)} processed, {errors} errors.")
 
     graph_df = (
         pd.DataFrame(results)
