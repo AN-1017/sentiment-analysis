@@ -1,7 +1,9 @@
 langchain-openai==1.2.1
+langchain-openrouter==0.2.3
 langgraph==1.1.10
 pydantic==2.13.4
 pandas==2.3.0
 scikit-learn==1.8.0
 python-dotenv==1.1.1
 httpx==0.28.1
+trustcall==0.0.39
