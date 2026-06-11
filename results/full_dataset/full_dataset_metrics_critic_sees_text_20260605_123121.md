@@ -65,3 +65,15 @@ weighted avg       0.85      0.78      0.80     22641
 | 1 | 22279 |
 | 2 | 281 |
 | 3 | 80 |
+
+## Corrected 3-Class Metrics (added 2026-06-11)
+
+> **Correction:** The macro average above (0.38) is deflated by spurious zero-support `error` and `mixed` labels emitted by the LLM, which sklearn counts as 5 classes (two with F1 = 0.00). Metrics below are recomputed from the confusion matrix over the three true classes only; out-of-label predictions still count against recall.
+
+| Class | Precision | Recall | F1 | Support |
+|:---|---:|---:|---:|---:|
+| good | 0.9905 | 0.8211 | 0.8979 | 17448 |
+| neutral | 0.2907 | 0.4222 | 0.3444 | 2823 |
+| poor | 0.5102 | 0.8772 | 0.6452 | 2370 |
+
+**Corrected Macro F1: 0.6291** (previously reported: 0.38)

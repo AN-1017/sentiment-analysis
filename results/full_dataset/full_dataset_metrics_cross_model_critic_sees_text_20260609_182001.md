@@ -62,3 +62,15 @@ weighted avg       0.85      0.46      0.59     22641
 | 1 | 13447 |
 | 2 | 43 |
 | 3 | 1 |
+
+## Corrected 3-Class Metrics (added 2026-06-11)
+
+> **Correction:** The macro average above (0.37) includes a zero-support `error` class. Metrics below are recomputed over the three true classes only. The 9,150 `error` predictions (40.4% of the dataset) still count against recall, so this run remains a clear failure even after correction.
+
+| Class | Precision | Recall | F1 | Support |
+|:---|---:|---:|---:|---:|
+| good | 0.9903 | 0.4856 | 0.6516 | 17448 |
+| neutral | 0.2934 | 0.2597 | 0.2755 | 2823 |
+| poor | 0.5263 | 0.5414 | 0.5337 | 2370 |
+
+**Corrected Macro F1: 0.4869** (previously reported: 0.37) — still well below the exp-02 baseline (0.6298)

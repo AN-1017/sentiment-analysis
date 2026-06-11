@@ -89,3 +89,11 @@ A naive classifier that predicts **"good" for every review** would achieve **77.
 1. **Remove the self-review loop** — 99.99% agreement rate means it provides no value. Removing it cuts API calls in half and roughly doubles speed.
 2. **Improve `neutral` classification** — add few-shot examples to the prompt that clearly distinguish neutral from good/poor, or use a confidence threshold approach.
 3. **Fix `mixed` label leakage** — constrain the prompt more explicitly (e.g., "respond with exactly one of: good, neutral, poor") to prevent the model from inventing new labels.
+
+---
+
+## Correction (added 2026-06-11)
+
+The "Macro F1 = 0.47" cited throughout this review is **incorrect**. The 3 spurious `mixed` predictions caused sklearn to average over 4 classes (one with F1 = 0.00), deflating the macro average. Recomputed over the three true classes: (0.8952 + 0.3450 + 0.6491) / 3 = **0.6298**.
+
+This invalidates cross-experiment comparisons made against the 0.47 figure — in particular, exp-05's reported 0.63 is **not** an improvement; on corrected 3-class metrics, exp-02 through exp-05 are equivalent (0.629–0.632). The per-class analysis and recommendations above remain valid.

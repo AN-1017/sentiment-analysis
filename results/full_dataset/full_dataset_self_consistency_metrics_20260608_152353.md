@@ -68,3 +68,15 @@ weighted avg       0.85      0.77      0.80     22641
 | Majority vote (5 LLMs): neutral=4, good=1 → neutral | 25 | 0.1% |
 | Majority vote (5 LLMs): poor=3, good=2 → poor | 1 | 0.0% |
 | Majority vote (5 LLMs): poor=4, good=1 → poor | 1 | 0.0% |
+
+## Corrected 3-Class Metrics (added 2026-06-11)
+
+> **Note:** This run produced no spurious labels, so the reported macro F1 (0.63) was already computed over the three true classes and stands. It is restated below for cross-experiment comparability. **Caution:** the apparent improvement over exp-02/03/04's previously reported values (0.47/0.38/0.47) is an artifact — those figures were deflated by zero-support spurious labels. On corrected 3-class metrics all of exp-02 through exp-05 are equivalent (0.629–0.632).
+
+| Class | Precision | Recall | F1 | Support |
+|:---|---:|---:|---:|---:|
+| good | 0.9916 | 0.8140 | 0.8941 | 17448 |
+| neutral | 0.2868 | 0.4375 | 0.3465 | 2823 |
+| poor | 0.5155 | 0.8726 | 0.6481 | 2370 |
+
+**Corrected Macro F1: 0.6295** (no change; not an improvement over exp-02's corrected 0.6298)
