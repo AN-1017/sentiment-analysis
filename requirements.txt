@@ -7,3 +7,4 @@ scikit-learn==1.8.0
 python-dotenv==1.1.1
 httpx==0.28.1
 trustcall==0.0.39
+plotly==6.1.2
