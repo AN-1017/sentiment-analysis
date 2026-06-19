@@ -346,12 +346,4 @@ Neutral F1 ≈ 0.33–0.35 across all architectures including the best (exp-04: 
 
 ---
 
-## What Is Not Addressed (Scope Gaps for Full Submission)
 
-- **Additional datasets** — all experiments run on a single proprietary e-commerce dataset. Generalisability claims require at least two external datasets (e.g. SemEval-2017 Task 4, Amazon Reviews, Yelp).
-- **Fine-tuned encoder baseline** — no DistilBERT/RoBERTa baseline exists; reviewers will ask for it.
-- **Cost reporting** — API costs per experiment were not formally recorded; only calls/review is reported.
-- **Multiple seeds** — all runs used a single seed. For publication, ≥3 seeds with mean ± std are expected.
-- **Latency reporting** — p95 latency was not captured for any main branch experiment.
-- **Label-noise analysis** — neutral class failure is attributed informally to label noise but not formally quantified.
-- **Positioning against prior work** — no literature review or comparison against chain-of-thought, LLM-as-judge, or self-consistency prior work.
